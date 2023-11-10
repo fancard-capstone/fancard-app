@@ -1,4 +1,5 @@
 import 'package:fancardplus/account.dart';
+import 'package:fancardplus/components/bottomnavbar.dart';
 import 'package:fancardplus/components/topbar.dart';
 import 'package:fancardplus/home.dart';
 import 'package:fancardplus/profile.dart';
@@ -36,22 +37,75 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home: const MyHomePage(),
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-            appBar: appBar('Fancard+'),
-            body: const TabBarView(
-              children: [AccountPage(), MyHomePage(), ProfilePage()],
-            ),
-            bottomNavigationBar: const TabBar(
-              indicatorColor: Colors.transparent,
-              splashBorderRadius: BorderRadius.all(Radius.circular(100)),
-              tabs: [
-                Tab(icon: Icon(Icons.account_balance), text: "Account"),
-                Tab(icon: Icon(Icons.home), text: "Home"),
-                Tab(icon: Icon(Icons.person), text: "Profile"),
-              ],
-            )),
+      home: const AppLayout(),
+    );
+  }
+}
+
+class AppLayout extends StatefulWidget {
+  const AppLayout({super.key});
+
+  @override
+  State<AppLayout> createState() => _AppLayoutState();
+}
+
+class _AppLayoutState extends State<AppLayout> with TickerProviderStateMixin {
+  late final TabController _tabController;
+
+  int _currentIndex = 0;
+
+  // TabController _tabController;
+
+  final List<Widget> _tabList = const [
+    AccountPage(),
+    MyHomePage(),
+    ProfilePage()
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: _tabList.length);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      initialIndex: 1,
+      child: Scaffold(
+        appBar: appBar('Fancard+'),
+        body: const TabBarView(
+          controller: _tabController,
+          children: _tabList,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: Colors.red[600],
+            unselectedItemColor: Colors.white,
+            selectedItemColor: Colors.white,
+            currentIndex: _currentIndex,
+            onTap: (currentIndex) {
+              setState(() {
+                _currentIndex = currentIndex;
+              });
+
+              _tabController.animateTo(_currentIndex);
+            },
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: 'Logs',
+              ),
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.person), label: 'Profile'),
+            ]),
       ),
     );
   }
