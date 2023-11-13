@@ -12,32 +12,64 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Color(0xFFFFCCCC),
-          body: Center(
-            child: Image.asset(
-              'assets/user_profile.jpg',
-              height: 250,
-            ),
+        backgroundColor: const Color(0xFFFFCCCC),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Circular image
+              Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage(
+                        'assets/images/user_image.jpg'), // Replace with your image path
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              // Email address
+              const Text(
+                'Group5@fanshaweonline.ca', // Replace with the actual email address
+                style: TextStyle(fontSize: 12.0, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 20.0),
+              // Five buttons
+              const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CustomButton('Update Email'),
+                  CustomButton('Update Phone'),
+                  CustomButton('Update Photo'),
+                  CustomButton('App Setting'),
+                ],
+              ),
+            ],
           ),
-          bottomNavigationBar: BottomAppBar(
-            child: Buttons(),
-          )),
+        ),
+      ),
     );
   }
 }
 
-// ignore: non_constant_identifier_names
-Buttons() {
-  TextButton(
-    style: ButtonStyle(
-      overlayColor: MaterialStateProperty.resolveWith<Color?>(
-          (Set<MaterialState> states) {
-        if (states.contains(MaterialState.focused))
-          return const Color.fromARGB(255, 57, 54, 244);
-        return null; // Defer to the widget's default.
-      }),
-    ),
-    onPressed: () {},
-    child: const Text('TextButton'),
-  );
+class CustomButton extends StatelessWidget {
+  final String buttonText;
+
+  const CustomButton(this.buttonText, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          // Add your button click logic here
+        },
+        child: Text(buttonText),
+      ),
+    );
+  }
 }
