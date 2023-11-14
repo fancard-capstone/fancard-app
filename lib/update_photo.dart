@@ -1,11 +1,11 @@
-// ignore_for_file: camel_case_types
-
+// ignore: file_names
 import 'package:fancardplus/components/topbar.dart';
 import 'package:flutter/material.dart'
-    show AppBar, BuildContext, Center, Scaffold, Text, Widget;
+    show BuildContext, Center, Scaffold, Text, Widget;
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 
+// ignore: camel_case_types
 class updatePhoto extends StatefulWidget {
   const updatePhoto({super.key});
 
@@ -13,6 +13,7 @@ class updatePhoto extends StatefulWidget {
   State<updatePhoto> createState() => _updatePhotoState();
 }
 
+// ignore: camel_case_types
 class _updatePhotoState extends State<updatePhoto> {
   @override
   Widget build(BuildContext context) {

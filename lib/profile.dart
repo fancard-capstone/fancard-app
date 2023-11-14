@@ -1,8 +1,8 @@
-import 'appSetting.dart';
-import 'updatePhone.dart';
+import 'app_setting.dart';
+import 'update_phone.dart';
 import 'package:flutter/material.dart';
-import 'emailupdate.dart';
-import 'updatePhoto.dart';
+import 'email_update.dart';
+import 'update_photo.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
