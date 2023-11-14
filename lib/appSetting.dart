@@ -1,7 +1,8 @@
 // ignore_for_file: camel_case_types
 
+import 'package:fancardplus/components/topbar.dart';
 import 'package:flutter/material.dart'
-    show AppBar, BuildContext, Center, Scaffold, Text, Widget;
+    show BuildContext, Center, Scaffold, Text, Widget;
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 
@@ -16,9 +17,7 @@ class _appSettingState extends State<appSetting> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('appSetting'),
-      ),
+      appBar: appBar('App Setting'),
       body: const Center(
         child: Text('appSetting'),
       ),
