@@ -1,7 +1,6 @@
 // ignore_for_file: camel_case_types
 
 import 'package:fancardplus/components/topbar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -55,6 +54,7 @@ class _updatePhoneState extends State<updatePhone> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
+                // ignore: unused_local_variable
                 String newPhone = newPhoneController.text;
 
                 // Implement logic to update phone using oldPhone and newPhone
