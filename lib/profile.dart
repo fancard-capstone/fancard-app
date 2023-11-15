@@ -48,7 +48,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 navigateToPage(context, const updatePhone());
               }),
               CustomButton('Update Photo', () {
-                navigateToPage(context, const updatePhoto());
+                navigateToPage(context, const UpdatePhoto());
               }),
               CustomButton('App Setting', () {
                 navigateToPage(context, const appSetting());
