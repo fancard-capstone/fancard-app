@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
       // home: const MyHomePage(),
       home: DefaultTabController(
         length: 3,
+        initialIndex: 1,
         child: Scaffold(
             appBar: appBar('Fancard+'),
             body: const TabBarView(
