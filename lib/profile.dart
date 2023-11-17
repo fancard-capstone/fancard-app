@@ -1,3 +1,4 @@
+
 import 'app_setting.dart';
 import 'update_phone.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
               CustomButton('App Setting', () {
                 navigateToPage(context, const appSetting());
               }),
+               
             ],
           ),
         ),
