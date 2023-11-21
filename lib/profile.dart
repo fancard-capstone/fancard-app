@@ -54,6 +54,9 @@ class _ProfilePageState extends State<ProfilePage> {
               CustomButton('App Setting', () {
                 navigateToPage(context, const appSetting());
               }),
+              CustomButton('Log Out', () {
+                showLogoutConfirmation(context);
+              }),
                
             ],
           ),
@@ -62,6 +65,38 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+void showLogoutConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirm Log Out'),
+          content: const Text('Are you sure you want to log out?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Dismiss the dialog
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                // Perform log-out logic and navigate to login
+                // Your log-out logic goes here (e.g., clearing authentication tokens)
+                // ...
+
+                // Navigate to the login screen
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              },
+              child: const Text('Yes'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
 class CustomButton extends StatelessWidget {
   final String buttonText;

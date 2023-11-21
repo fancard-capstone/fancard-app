@@ -1,7 +1,4 @@
-import 'package:fancardplus/account.dart';
-import 'package:fancardplus/components/topbar.dart';
-import 'package:fancardplus/home.dart';
-import 'package:fancardplus/profile.dart';
+import 'package:fancardplus/login.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -35,8 +32,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home: const MyHomePage(),
-      home: DefaultTabController(
+       initialRoute: '/login', // Set the initial route to the login page
+      routes: {
+      '/login': (context) => const LoginPage('user@example.com', 'password', key: null),
+        // Add other routes if needed
+      },
+     /* home: DefaultTabController(
         length: 3,
         initialIndex: 1,
         child: Scaffold(
@@ -53,7 +54,7 @@ class MyApp extends StatelessWidget {
                 Tab(icon: Icon(Icons.person), text: "Profile"),
               ],
             )),
-      ),
+      ),*/
     );
   }
 }

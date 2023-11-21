@@ -1,91 +1,96 @@
+import 'package:fancardplus/faq_page.dart';
+import 'package:fancardplus/successLanding.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key, required this.username, required this.password});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String username;
-  final String password;
+  const LoginPage(String s, String p, {Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  // ignore: library_private_types_in_public_api
+  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  //final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  int _counter = 0;
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  String errorText = '';
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  void _login() {
+    // Simulate database check (replace this with your actual database logic)
+    if (usernameController.text == 'asdf' && passwordController.text == 'password') {
+      // If successful, navigate to the home page
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SuccessLanding()),
+      );
+    } else {
+      // If unsuccessful, show error message
+      setState(() {
+        errorText = 'Incorrect credentials. Please try again.';
+      });
+    }
+  }
+
+  void _openFAQ() {
+    // Navigate to the FAQ page (replace this with your actual navigation logic)
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const FAQPage()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //ggggg
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        // Here we take the value from the LoginPage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: const Text("Login"),
+        title: const Text('Login'),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Image.asset(
+              'assets/images/fancard_logo.jpeg', // Replace with your image path
+              width: 300.0,
+              height: 300.0,
+             fit: BoxFit.cover,
             ),
+            const SizedBox(height: 20.0),
+            TextField(
+              controller: usernameController,
+              decoration: const InputDecoration(labelText: 'Username/Email'),
+            ),
+            const SizedBox(height: 10.0),
+            TextField(
+              controller: passwordController,
+              obscureText: true,
+              decoration: const InputDecoration(labelText: 'Password'),
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: _login,
+              child: const Text('Submit'),
+            ),
+            const SizedBox(height: 10.0),
             Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+              errorText,
+              style: const TextStyle(color: Colors.red),
+            ),
+            const SizedBox(height: 20.0),
+            GestureDetector(
+              onTap: _openFAQ,
+              child: const Text(
+                'Need Help?',
+                style: TextStyle(
+                  color: Colors.blue,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
