@@ -1,5 +1,5 @@
 import 'package:fancardplus/faq_page.dart';
-import 'package:fancardplus/successLanding.dart';
+import 'package:fancardplus/success_landing.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: AccountPage(),
     );
   }
@@ -25,9 +27,9 @@ class _AccountPageState extends State<AccountPage> {
           mainAxisAlignment: MainAxisAlignment.start, // Aligns widgets to the start (top) of the column
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 0), // Increased space at the top
+            const SizedBox(height: 0), // Increased space at the top
 
-            Container(
+            SizedBox(
               width: 270,
               height: 100, // Increased height of the Account Summary box
               child: CustomButton('Account Summary', () {
@@ -36,7 +38,7 @@ class _AccountPageState extends State<AccountPage> {
 
             ),
 
-            SizedBox(height: 80), // Increased spacing between Account Summary and FC meal plan
+            const SizedBox(height: 80), // Increased spacing between Account Summary and FC meal plan
 
             Container(
               width: 270,
@@ -45,7 +47,7 @@ class _AccountPageState extends State<AccountPage> {
                 borderRadius: BorderRadius.circular(20.0),
                 color: const Color(0xFFF3EDF7),
               ),
-              child: Column(
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -68,7 +70,7 @@ class _AccountPageState extends State<AccountPage> {
               ),
             ),
 
-            SizedBox(height: 50), // Adjust spacing between FC meal plan and buttons
+            const SizedBox(height: 50), // Adjust spacing between FC meal plan and buttons
 
             CustomButton('Show Transaction History', () {
               // Add the functionality for the Show Transaction History button
