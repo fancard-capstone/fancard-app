@@ -6,13 +6,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AccountPage(),
+      home: AccountPage(responseBody: null,),
     );
   }
 }
 
 class AccountPage extends StatefulWidget {
-  const AccountPage({Key? key}) : super(key: key);
+  const AccountPage({Key? key, required responseBody}) : super(key: key);
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -30,11 +30,11 @@ class _AccountPageState extends State<AccountPage> {
             left:55,
             right: 0,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 0),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(width: 35), // Adjusted the width to maintain the spacing
+                  const SizedBox(width: 35), // Adjusted the width to maintain the spacing
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class _AccountPageState extends State<AccountPage> {
                           width: 200, // Width of the CustomButton
                           height: 70, // Height of the CustomButton
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         // Add more widgets related to account summary if needed
                       ],
                     ),
@@ -60,13 +60,13 @@ class _AccountPageState extends State<AccountPage> {
             left:5,
             right: 0,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 0),
-              child: Row(
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CircleAvatar(
                     backgroundImage: AssetImage(
-                        'assets/profile_picture.jpg'), // Replace with your image
+                        'assets/images/user_image.jpg'), // Replace with your image
                     radius: 35, // Width of the CircleAvatar
                     backgroundColor: Colors.blue, // Replace with your desired background color or remove it
                   ),
@@ -75,7 +75,7 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 100), // Adjust this value to align with the summary box
+            padding: const EdgeInsets.only(top: 100), // Adjust this value to align with the summary box
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +87,7 @@ class _AccountPageState extends State<AccountPage> {
                       borderRadius: BorderRadius.circular(20.0),
                       color: const Color(0xFFF3EDF7),
                     ),
-                    child: Column(
+                    child: const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -109,7 +109,7 @@ class _AccountPageState extends State<AccountPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 50),
+                  const SizedBox(height: 50),
                   CustomButton(
                     'Show Transaction History',
                         () {

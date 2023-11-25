@@ -1,8 +1,11 @@
 import 'package:fancardplus/nfc.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  final Map<String, dynamic> responseBody;
+
+  const MyHomePage({Key? key, required this.responseBody}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -11,49 +14,66 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    // Parse the date string
+   DateTime? issuedOn = widget.responseBody['issuedOn'] != null
+        ? DateTime.parse(widget.responseBody['issuedOn'])
+        : null;
+
+    // Format the date using intl package if issuedOn is not null
+    String formattedDate = issuedOn != null
+        ? DateFormat('yyyy-MM-dd').format(issuedOn)
+        : 'N/A'; // Set a default value if issuedOn is null
+    
     return Scaffold(
       body: Row(
         children: [
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
-
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 100.0, bottom: 20.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100.0),
                     child: Image.network(
-                      "https://randomuser.me/api/portraits/men/73.jpg",
+                      widget.responseBody[
+                              'https://randomuser.me/api/portraits/men/73.jpg'] ??
+                          'https://randomuser.me/api/portraits/men/73.jpg',
                       height: 200,
                       width: 200,
                       fit: BoxFit.fill,
                     ),
                   ),
                 ),
-                const Card(
+                Card(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(20.0),
                     child: SizedBox(
                       width: 250,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                          // First Column
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text("Name:"),
                               Text("Student ID:"),
                               Text("Issued on:"),
                             ],
                           ),
+                          const SizedBox(
+                              width: 10), // Add spacing between columns
+
+                          // Second Column
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text("Sajal Dulal", maxLines: 1),
-                              Text("1085561"),
-                              Text("2023/03/23"),
+                              Text(
+                                  "${widget.responseBody['firstName']} ${widget.responseBody['lastName']}",
+                                  maxLines: 1),
+                              Text("${widget.responseBody['userId']}"),
+                              Text(formattedDate),
                             ],
                           ),
                         ],

@@ -5,7 +5,10 @@ import 'package:fancardplus/profile.dart';
 import 'package:flutter/material.dart';
 
 class SuccessLanding extends StatelessWidget {
-  const SuccessLanding({Key? key}) : super(key: key);
+  final Map<String, dynamic> responseBody;
+
+  const SuccessLanding({Key? key, required this.responseBody})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,21 +22,25 @@ class SuccessLanding extends StatelessWidget {
         length: 3,
         initialIndex: 1,
         child: Scaffold(
-            appBar: appBar('Fancard+'),
-            body: const TabBarView(
-              children: [AccountPage(), MyHomePage(), ProfilePage()],
-            ),
-            bottomNavigationBar: const TabBar(
-              indicatorColor: Colors.transparent,
-              splashBorderRadius: BorderRadius.all(Radius.circular(100)),
-              tabs: [
-                Tab(icon: Icon(Icons.account_balance), text: "Account"),
-                Tab(icon: Icon(Icons.home), text: "Home"),
-                Tab(icon: Icon(Icons.person), text: "Profile"),
-              ],
-            )
-            ),
+          appBar: appBar('Fancard+'),
+          body: TabBarView(
+            children: [
+              const AccountPage(responseBody: null),
+              MyHomePage(responseBody: responseBody),
+              ProfilePage(responseBody: responseBody),
+            ],
+          ),
+          bottomNavigationBar: const TabBar(
+            indicatorColor: Colors.transparent,
+            splashBorderRadius: BorderRadius.all(Radius.circular(100)),
+            tabs: [
+              Tab(icon: Icon(Icons.account_balance), text: "Account"),
+              Tab(icon: Icon(Icons.home), text: "Home"),
+              Tab(icon: Icon(Icons.person), text: "Profile"),
+            ],
+          ),
         ),
-      );
+      ),
+    );
   }
 }

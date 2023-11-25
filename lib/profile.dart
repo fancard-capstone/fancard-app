@@ -6,7 +6,10 @@ import 'email_update.dart';
 import 'update_photo.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  
+  final Map<String, dynamic> responseBody; // Add this line to declare responseBody
+
+  const ProfilePage({Key? key, required this.responseBody}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -36,17 +39,17 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 8.0),
               // Email address
-              const Text(
-                'user@example.com', // Replace with the actual email address
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              Text(
+                widget.responseBody['email'] ?? '', // Replace with the actual email address
+                style: const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20.0),
               // Five buttons aligned vertically
               CustomButton('Update Email', () {
-                navigateToPage(context, const emailUpdate());
+                navigateToPage(context, emailUpdate(widget.responseBody['email']));
               }),
               CustomButton('Update Phone', () {
-                navigateToPage(context, const updatePhone());
+                navigateToPage(context, updatePhone(widget.responseBody['phoneNumber']));
               }),
               CustomButton('Update Photo', () {
                 navigateToPage(context, const UpdatePhoto());

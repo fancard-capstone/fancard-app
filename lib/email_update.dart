@@ -22,7 +22,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/src/widgets/framework.dart';
 
 class emailUpdate extends StatefulWidget {
-  const emailUpdate({super.key});
+  const emailUpdate(responseBody, {super.key});
 
   @override
   State<emailUpdate> createState() => _EmailUpdateState();

@@ -22,7 +22,7 @@ import 'package:flutter/material.dart'
 import 'package:flutter/src/widgets/framework.dart';
 
 class updatePhone extends StatefulWidget {
-  const updatePhone({super.key});
+  const updatePhone(responseBody, {super.key});
 
   @override
   State<updatePhone> createState() => _updatePhoneState();

@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'package:fancardplus/faq_page.dart';
 import 'package:fancardplus/success_landing.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage(String s, String p, {Key? key}) : super(key: key);
@@ -14,8 +16,44 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String errorText = '';
+  
+ 
 
-  void _login() {
+
+Future<void> _login() async {
+  
+    final response = await http.post(
+      Uri.parse('http://172.22.24.64:8080/api/users/login'), 
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'email': usernameController.text,
+        'password': passwordController.text,
+      }),
+    );
+print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      // Parse the response body as JSON
+    final Map<String, dynamic> responseBody = json.decode(response.body);
+
+    // Navigate to SuccessLanding and pass the entire response body
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SuccessLanding(responseBody: responseBody),
+      ),
+    );
+    } else {
+      // If unsuccessful, show error message
+      setState(() {
+        errorText = 'Incorrect credentials. Please try again.';
+      });
+    }
+  }
+  /*void _login() {
     // Simulate database check (replace this with your actual database logic)
     if (usernameController.text == 'asdf' && passwordController.text == 'password') {
       // If successful, navigate to the home page
@@ -29,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         errorText = 'Incorrect credentials. Please try again.';
       });
     }
-  }
+  }*/
 
   void _openFAQ() {
     // Navigate to the FAQ page (replace this with your actual navigation logic)
