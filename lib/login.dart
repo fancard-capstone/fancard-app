@@ -16,58 +16,46 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String errorText = '';
-  
- 
 
+  Future<void> _login() async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://172.22.24.64:8080/api/users/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'email': usernameController.text,
+          'password': passwordController.text,
+        }),
+      );
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      if (response.statusCode == 200) {
+        // Parse the response body as JSON
+        final Map<String, dynamic> responseBody = json.decode(response.body);
 
-Future<void> _login() async {
-  
-    final response = await http.post(
-      Uri.parse('http://172.22.24.64:8080/api/users/login'), 
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'email': usernameController.text,
-        'password': passwordController.text,
-      }),
-    );
-print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
-    if (response.statusCode == 200) {
-      // Parse the response body as JSON
-    final Map<String, dynamic> responseBody = json.decode(response.body);
-
-    // Navigate to SuccessLanding and pass the entire response body
-    // ignore: use_build_context_synchronously
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => SuccessLanding(responseBody: responseBody),
-      ),
-    );
-    } else {
-      // If unsuccessful, show error message
+        // Navigate to SuccessLanding and pass the entire response body
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SuccessLanding(responseBody: responseBody),
+          ),
+        );
+      } else {
+        // If unsuccessful, show error message
+        setState(() {
+          errorText = 'Incorrect credentials. Please try again.';
+        });
+      }
+    } catch (error) {
       setState(() {
-        errorText = 'Incorrect credentials. Please try again.';
+        errorText = 'Failed to connect. Please check your internet connection.';
       });
+      print('Error: $error');
     }
   }
-  /*void _login() {
-    // Simulate database check (replace this with your actual database logic)
-    if (usernameController.text == 'asdf' && passwordController.text == 'password') {
-      // If successful, navigate to the home page
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const SuccessLanding()),
-      );
-    } else {
-      // If unsuccessful, show error message
-      setState(() {
-        errorText = 'Incorrect credentials. Please try again.';
-      });
-    }
-  }*/
 
   void _openFAQ() {
     // Navigate to the FAQ page (replace this with your actual navigation logic)
@@ -89,10 +77,10 @@ print('Response status: ${response.statusCode}');
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/fancard_logo.jpeg', // Replace with your image path
+              'assets/images/fancard_logo.jpeg', 
               width: 300.0,
               height: 300.0,
-             fit: BoxFit.cover,
+              fit: BoxFit.cover,
             ),
             const SizedBox(height: 20.0),
             TextField(
