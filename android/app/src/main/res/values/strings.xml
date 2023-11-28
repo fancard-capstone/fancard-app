@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="servicedesc">Your service description here</string>
+    <string name="aiddescription">Your service description here</string>
+</resources>
