@@ -43,6 +43,8 @@ dependencies:
   nfc_manager: ^3.3.0
   http: ^1.1.0
   intl: ^0.18.1
+  connectivity: ^3.0.6
+  
 
 dev_dependencies:
   flutter_test:

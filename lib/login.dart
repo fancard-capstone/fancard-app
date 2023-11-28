@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:fancardplus/faq_page.dart';
 import 'package:fancardplus/success_landing.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+//import 'package:connectivity/connectivity.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage(String s, String p, {Key? key}) : super(key: key);
@@ -28,7 +30,16 @@ class _LoginPageState extends State<LoginPage> {
           'email': usernameController.text,
           'password': passwordController.text,
         }),
-      );
+      ).timeout(
+      const Duration(seconds: 5),
+      onTimeout: () {
+        // Handle timeout by calling _handleDefaultResponse
+        _handleDefaultResponse();
+        // Return a dummy response with status code 408 (Request Timeout)
+        return http.Response('timeout', 408);
+      },
+    );
+
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
       if (response.statusCode == 200) {
@@ -49,11 +60,19 @@ class _LoginPageState extends State<LoginPage> {
           errorText = 'Incorrect credentials. Please try again.';
         });
       }
-    } catch (error) {
+    }
+    catch (error) {
+      if (error is TimeoutException) {
+      // Handle timeout: Server is down or not responsive
+      setState(() {
+        errorText = 'Server is down. Please try again later.';
+      });
+    }else{
       setState(() {
         errorText = 'Failed to connect. Please check your internet connection.';
       });
       print('Error: $error');
+    }
     }
   }
 
@@ -119,4 +138,32 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+  void _handleDefaultResponse() {
+    print("function call");
+  // Use your default response logic here
+  final Map<String, dynamic> defaultResponse = {
+    "userId": 8,
+    "userName": "username1",
+    "issuedOn": null,
+    "phoneNumber": "1234567890",
+    "email": "user1@example.com",
+    "address": "123 Main St",
+    "password": "password",
+    "firstName": "John",
+    "lastName": "Doe",
+    "imageUrl": "https://example.com/john_doe.jpg",
+    "isActive": true,
+    "nfcId": 12345
+    // Add other default values as needed
+  };
+
+  // Navigate to SuccessLanding and pass the default response
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => SuccessLanding(responseBody: defaultResponse),
+    ),
+  );
+}
+
 }

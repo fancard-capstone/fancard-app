@@ -22,16 +22,25 @@ import 'package:flutter/material.dart'
 import 'package:flutter/src/widgets/framework.dart';
 
 class emailUpdate extends StatefulWidget {
-  const emailUpdate(responseBody, {super.key});
+  final Map<String, dynamic> responseBody;
+
+  const emailUpdate({Key? key, required this.responseBody}) : super(key: key);
 
   @override
   State<emailUpdate> createState() => _EmailUpdateState();
 }
-
 class _EmailUpdateState extends State<emailUpdate> {
-  TextEditingController newEmailController = TextEditingController();
-  String oldEmail = 'user@example.com'; // Replace with the actual old email
+ TextEditingController newPhoneController = TextEditingController();
+  late String oldEmail;
+  
+  get newEmailController => null;
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize oldPhone with the value from the response
+    oldEmail = widget.responseBody['email'] ?? '';
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

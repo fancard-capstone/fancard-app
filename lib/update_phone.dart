@@ -22,7 +22,9 @@ import 'package:flutter/material.dart'
 import 'package:flutter/src/widgets/framework.dart';
 
 class updatePhone extends StatefulWidget {
-  const updatePhone(responseBody, {super.key});
+  final Map<String, dynamic> responseBody;
+
+  const updatePhone({Key? key, required this.responseBody}) : super(key: key);
 
   @override
   State<updatePhone> createState() => _updatePhoneState();
@@ -30,7 +32,14 @@ class updatePhone extends StatefulWidget {
 
 class _updatePhoneState extends State<updatePhone> {
   TextEditingController newPhoneController = TextEditingController();
-  String oldPhone = '+1234567890'; 
+  late String oldPhone;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize oldPhone with the value from the response
+    oldPhone = widget.responseBody['phoneNumber'] ?? '';
+  }
 
   @override
   Widget build(BuildContext context) {
