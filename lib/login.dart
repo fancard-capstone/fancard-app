@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:fancardplus/faq_page.dart';
+import 'package:fancardplus/forget_password.dart';
 import 'package:fancardplus/success_landing.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     try {
       final response = await http.post(
-        Uri.parse('http://10.0.0.110:8080/api/users/login'),
+        Uri.parse('https://86c3-205-211-143-96.ngrok-free.app/api/users/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -75,7 +76,13 @@ class _LoginPageState extends State<LoginPage> {
     }
     }
   }
-
+void _openForgotPassword() {
+     Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ForgotPasswordPage()),
+    );
+    print("Forgot Password clicked");
+  }
   void _openFAQ() {
     // Navigate to the FAQ page (replace this with your actual navigation logic)
     Navigator.push(
@@ -123,6 +130,21 @@ class _LoginPageState extends State<LoginPage> {
               style: const TextStyle(color: Colors.red),
             ),
             const SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: _openForgotPassword,
+                  child: const Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              ],
+            ),
             GestureDetector(
               onTap: _openFAQ,
               child: const Text(
@@ -131,13 +153,14 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
                 ),
-              ),
-            ),
+                  ),
+                ),
           ],
         ),
       ),
     );
   }
+
   void _handleDefaultResponse() {
     print("function call");
   // Use your default response logic here
