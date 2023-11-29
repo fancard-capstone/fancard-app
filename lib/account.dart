@@ -1,3 +1,5 @@
+import 'package:fancardplus/add_money_page.dart';
+import 'package:fancardplus/transaction_history.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,7 +8,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AccountPage(responseBody: null,),
+      home: AccountPage(
+        responseBody: null,
+      ),
     );
   }
 }
@@ -27,21 +31,24 @@ class _AccountPageState extends State<AccountPage> {
         children: [
           Positioned(
             top: 10,
-            left:55,
+            left: 55,
             right: 0,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(width: 35), // Adjusted the width to maintain the spacing
+                  const SizedBox(
+                      width: 35), // Adjusted the width to maintain the spacing
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomButton('Account Summary', () {
-                          // Add functionality for the Account Summary button
-                        },
+                        CustomButton(
+                          'Account Summary',
+                          () {
+                            // Add functionality for the Account Summary button
+                          },
                           isRounded: false,
                           width: 200, // Width of the CustomButton
                           height: 70, // Height of the CustomButton
@@ -56,8 +63,9 @@ class _AccountPageState extends State<AccountPage> {
             ),
           ),
           Positioned(
-            top: 18, // Adjusted the top position to move the CircleAvatar down by 5 units
-            left:5,
+            top:
+                18, // Adjusted the top position to move the CircleAvatar down by 5 units
+            left: 5,
             right: 0,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 0),
@@ -68,14 +76,16 @@ class _AccountPageState extends State<AccountPage> {
                     backgroundImage: AssetImage(
                         'assets/images/user_image.jpg'), // Replace with your image
                     radius: 35, // Width of the CircleAvatar
-                    backgroundColor: Colors.blue, // Replace with your desired background color or remove it
+                    backgroundColor: Colors
+                        .blue, // Replace with your desired background color or remove it
                   ),
                 ],
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 100), // Adjust this value to align with the summary box
+            padding: const EdgeInsets.only(
+                top: 100), // Adjust this value to align with the summary box
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -94,7 +104,8 @@ class _AccountPageState extends State<AccountPage> {
                         Text(
                           'FC meal plan: \$0.00',
                           style: TextStyle(
-                            fontSize: 18, // Increased font size for better visibility
+                            fontSize:
+                                18, // Increased font size for better visibility
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -102,7 +113,8 @@ class _AccountPageState extends State<AccountPage> {
                         Text(
                           'Something: \$3.00',
                           style: TextStyle(
-                            fontSize: 18, // Increased font size for better visibility
+                            fontSize:
+                                18, // Increased font size for better visibility
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -112,8 +124,13 @@ class _AccountPageState extends State<AccountPage> {
                   const SizedBox(height: 50),
                   CustomButton(
                     'Show Transaction History',
-                        () {
-                      // Add functionality for the Show Transaction History button
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const TransactionHistoryPage()),
+                      );
                     },
                     isRounded: true,
                     width: 270,
@@ -122,8 +139,13 @@ class _AccountPageState extends State<AccountPage> {
                   ),
                   CustomButton(
                     'Add Money',
-                        () {
-                      // Add functionality for the Add Money button
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const AddMoneyPage()),
+                      );
                     },
                     isRounded: true,
                     width: 270,
@@ -149,14 +171,14 @@ class CustomButton extends StatelessWidget {
   final double borderRadius;
 
   const CustomButton(
-      this.buttonText,
-      this.onPressed, {
-        Key? key,
-        this.isRounded = true,
-        this.width = 200,
-        this.height = 40, // Default height of the CustomButton
-        this.borderRadius = 8.0,
-      }) : super(key: key);
+    this.buttonText,
+    this.onPressed, {
+    Key? key,
+    this.isRounded = true,
+    this.width = 200,
+    this.height = 40, // Default height of the CustomButton
+    this.borderRadius = 8.0,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
