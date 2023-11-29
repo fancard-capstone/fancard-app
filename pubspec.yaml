@@ -44,6 +44,7 @@ dependencies:
   http: ^1.1.0
   intl: ^0.18.1
   connectivity: ^3.0.6
+  provider: ^6.1.1
   
 
 dev_dependencies:
