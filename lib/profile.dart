@@ -5,7 +5,10 @@ import 'email_update.dart';
 import 'update_photo.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final Map<String, dynamic>
+      responseBody; // Add this line to declare responseBody
+
+  const ProfilePage({Key? key, required this.responseBody}) : super(key: key);
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -24,6 +27,22 @@ class _ProfilePageState extends State<ProfilePage> {
               Container(
                 width: 100.0,
                 height: 100.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      widget.responseBody[
+                              'https://randomuser.me/api/portraits/men/73.jpg'] ??
+                          'https://randomuser.me/api/portraits/men/73.jpg',
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+
+              /*Container(
+                width: 100.0,
+                height: 100.0,
                 decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -32,20 +51,23 @@ class _ProfilePageState extends State<ProfilePage> {
                     fit: BoxFit.cover,
                   ),
                 ),
-              ),
+              ),*/
               const SizedBox(height: 8.0),
               // Email address
-              const Text(
-                'user@example.com', // Replace with the actual email address
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              Text(
+               "${widget.responseBody['firstName']} ${widget.responseBody['lastName']}", // Replace with the actual email address
+                style: const TextStyle(
+                    fontSize: 16.0, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20.0),
               // Five buttons aligned vertically
               CustomButton('Update Email', () {
-                navigateToPage(context, const emailUpdate());
+                navigateToPage(
+                    context, emailUpdate(responseBody: widget.responseBody));
               }),
               CustomButton('Update Phone', () {
-                navigateToPage(context, const updatePhone());
+                navigateToPage(
+                    context, updatePhone(responseBody: widget.responseBody));
               }),
               CustomButton('Update Photo', () {
                 navigateToPage(context, const UpdatePhoto());
@@ -53,12 +75,48 @@ class _ProfilePageState extends State<ProfilePage> {
               CustomButton('App Setting', () {
                 navigateToPage(context, const appSetting());
               }),
+              CustomButton('Log Out', () {
+                showLogoutConfirmation(context);
+              }),
             ],
           ),
         ),
       ),
     );
   }
+}
+
+void showLogoutConfirmation(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Confirm Log Out'),
+        content: const Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // Dismiss the dialog
+              Navigator.pop(context);
+            },
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              // Perform log-out logic and navigate to login
+              // Your log-out logic goes here (e.g., clearing authentication tokens)
+              // ...
+
+              // Navigate to the login screen
+              Navigator.pushNamedAndRemoveUntil(
+                  context, '/login', (route) => false);
+            },
+            child: const Text('Yes'),
+          ),
+        ],
+      );
+    },
+  );
 }
 
 class CustomButton extends StatelessWidget {
