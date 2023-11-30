@@ -13,20 +13,38 @@ class NFCPage extends StatefulWidget {
 
 class _NFCPageState extends State<NFCPage> {
   static const platform = MethodChannel('fancardplus-user-id-nfc');
-  String _batteryLevel = 'Unknown battery level.';
 
-  Future<void> _getBatteryLevel() async {
+  String _batteryLevel = '';
+  bool _loading = false;
+
+  @override
+  void initState() {
+    print("intializing nfc");
+    _setUserId();
+    super.initState();
+  }
+
+  Future<void> _setUserId() async {
     String batteryLevel;
     try {
-      final result = await platform.invokeMethod<String>('startNFCHCE', "24");
-      batteryLevel = 'Battery level at $result % .';
-    } on PlatformException catch (e) {
-      batteryLevel = "Failed to get battery level: '${e.message}'.";
-    }
+      _loading = true;
+      final result = await platform.invokeMethod<String>('startNFCHCE', "77");
 
+      print(result);
+
+      batteryLevel = "Transaction Successfull";
+    } on PlatformException catch (e) {
+      batteryLevel = "Failed transaction: '${e.message}'.";
+    }
     setState(() {
       _batteryLevel = batteryLevel;
     });
+    _loading = false;
+  }
+
+  Future<void> _noPress() async {
+    _setUserId();
+    print("Checking something");
   }
 
   @override
@@ -41,8 +59,13 @@ class _NFCPageState extends State<NFCPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                  onPressed: _getBatteryLevel,
-                  icon: const Icon(Icons.nfc, size: 200)),
+                onPressed: _noPress,
+                icon: Icon(
+                  Icons.nfc,
+                  size: 200,
+                  color: _loading ? Colors.green : Colors.red,
+                ),
+              ),
             ],
           ),
           Text(_batteryLevel),
