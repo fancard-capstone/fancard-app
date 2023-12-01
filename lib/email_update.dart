@@ -3,8 +3,30 @@
 import 'dart:convert';
 
 import 'package:fancardplus/components/topbar.dart';
+import 'package:fancardplus/constants.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Colors, Column, EdgeInsets, ElevatedButton, FontWeight, Icon, IconButton, Icons, InputDecoration, MainAxisAlignment, Padding, Scaffold, ScaffoldMessenger, SizedBox, SnackBar, Text, TextEditingController, TextField, TextStyle, Widget;
+    show
+        BuildContext,
+        Colors,
+        Column,
+        EdgeInsets,
+        ElevatedButton,
+        FontWeight,
+        Icon,
+        IconButton,
+        Icons,
+        InputDecoration,
+        MainAxisAlignment,
+        Padding,
+        Scaffold,
+        ScaffoldMessenger,
+        SizedBox,
+        SnackBar,
+        Text,
+        TextEditingController,
+        TextField,
+        TextStyle,
+        Widget;
 // ignore: implementation_imports
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
@@ -17,11 +39,11 @@ class emailUpdate extends StatefulWidget {
   @override
   State<emailUpdate> createState() => _EmailUpdateState();
 }
+
 class _EmailUpdateState extends State<emailUpdate> {
- TextEditingController newEmailController = TextEditingController();
+  TextEditingController newEmailController = TextEditingController();
   late String oldEmail;
   late int userId;
-
 
   @override
   void initState() {
@@ -31,10 +53,12 @@ class _EmailUpdateState extends State<emailUpdate> {
     userId = widget.responseBody['userId'] ?? 0;
     print('userId $userId');
   }
-Future<void> updateEmail(String newEmail) async {
+
+  Future<void> updateEmail(String newEmail) async {
     try {
       final response = await http.put(
-        Uri.parse('https://86c3-205-211-143-96.ngrok-free.app/api/users/update/$userId'), // Replace with your API endpoint
+        Uri.parse(
+            '$baseApiUrl/users/update/$userId'), // Replace with your API endpoint
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -49,11 +73,14 @@ Future<void> updateEmail(String newEmail) async {
         setState(() {
           oldEmail = newEmail;
         });
-        
+
         print('Email updated successfully');
       } else {
         // ignore: use_build_context_synchronously
-        showCustomSnackBar(context, 'Failed to update Email. Status code: ${response.statusCode}', false);
+        showCustomSnackBar(
+            context,
+            'Failed to update Email. Status code: ${response.statusCode}',
+            false);
         print('Failed to update email. Status code: ${response.statusCode}');
       }
     } catch (error) {
@@ -62,8 +89,9 @@ Future<void> updateEmail(String newEmail) async {
       print('Error: $error');
     }
   }
-  
-void showCustomSnackBar(BuildContext context, String message, bool isSuccess) {
+
+  void showCustomSnackBar(
+      BuildContext context, String message, bool isSuccess) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -71,7 +99,6 @@ void showCustomSnackBar(BuildContext context, String message, bool isSuccess) {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -89,23 +116,22 @@ void showCustomSnackBar(BuildContext context, String message, bool isSuccess) {
             ),
             const SizedBox(height: 16.0),
             TextField(
-              controller: newEmailController,
-              decoration: InputDecoration(
-                labelText: 'New Email',
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.clear),
-                  onPressed: () {
-                    // Clear the text field when the clear button is pressed
-                    newEmailController.clear();
-                  },
-                ),
-              )
-            ),
+                controller: newEmailController,
+                decoration: InputDecoration(
+                  labelText: 'New Email',
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.clear),
+                    onPressed: () {
+                      // Clear the text field when the clear button is pressed
+                      newEmailController.clear();
+                    },
+                  ),
+                )),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () {
                 // ignore: unused_local_variable
-                
+
                 String newEmail = newEmailController.text;
                 updateEmail(newEmail);
                 // Implement logic to update email using oldEmail and newEmail

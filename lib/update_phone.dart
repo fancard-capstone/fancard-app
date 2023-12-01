@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:fancardplus/components/topbar.dart';
+import 'package:fancardplus/constants.dart';
 import 'package:flutter/material.dart'
     show
         BuildContext,
@@ -56,8 +57,7 @@ class _updatePhoneState extends State<updatePhone> {
     try {
       final int userId = widget.responseBody['userId'];
       final response = await http.put(
-        Uri.parse(
-            'https://86c3-205-211-143-96.ngrok-free.app/api/users/update/$userId'),
+        Uri.parse('$baseApiUrl/users/update/$userId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

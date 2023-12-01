@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:fancardplus/constants.dart';
 import 'package:fancardplus/faq_page.dart';
 import 'package:fancardplus/forget_password.dart';
 import 'package:fancardplus/success_landing.dart';
@@ -20,10 +21,16 @@ class _LoginPageState extends State<LoginPage> {
   String errorText = '';
 
   Future<void> _login() async {
+    if (usernameController.text == "" || passwordController.text == "") {
+      setState(() {
+        errorText = 'username and password is required';
+      });
+      return;
+    }
     try {
       final response = await http
           .post(
-        Uri.parse('https://86c3-205-211-143-96.ngrok-free.app/api/users/login'),
+        Uri.parse('$baseApiUrl/users/login'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -63,6 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         });
       }
     } catch (error) {
+      print('Error: $error');
       if (error is TimeoutException) {
         // Handle timeout: Server is down or not responsive
         setState(() {
@@ -73,7 +81,6 @@ class _LoginPageState extends State<LoginPage> {
           errorText =
               'Failed to connect. Please check your internet connection.';
         });
-        print('Error: $error');
       }
     }
   }

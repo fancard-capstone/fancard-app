@@ -5,6 +5,8 @@ void main() {
   runApp(const MyApp());
 }
 
+var scaffoldkey = GlobalKey<ScaffoldMessengerState>();
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -12,18 +14,19 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldkey,
       title: 'FanCard+',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-       initialRoute: '/login', // Set the initial route to the login page
+      initialRoute: '/login', // Set the initial route to the login page
       routes: {
-      '/login': (context) => const LoginPage('user@example.com', 'password', key: null),
+        '/login': (context) =>
+            const LoginPage('user@example.com', 'password', key: null),
         // Add other routes if needed
       },
-     /* home: DefaultTabController(
+      /* home: DefaultTabController(
         length: 3,
         initialIndex: 1,
         child: Scaffold(
