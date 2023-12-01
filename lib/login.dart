@@ -19,6 +19,7 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   String errorText = '';
+  bool obscureText = true;
 
   Future<void> _login() async {
     if (usernameController.text == "" || passwordController.text == "") {
@@ -108,45 +109,73 @@ class _LoginPageState extends State<LoginPage> {
         title: const Text('Login'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/fancard_logo.jpeg',
-              width: 300.0,
-              height: 300.0,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 20.0),
-            TextField(
-              controller: usernameController,
-              decoration: const InputDecoration(labelText: 'Username/Email'),
-            ),
-            const SizedBox(height: 10.0),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(labelText: 'Password'),
-            ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: _login,
-              child: const Text('Submit'),
-            ),
-            const SizedBox(height: 10.0),
-            Text(
-              errorText,
-              style: const TextStyle(color: Colors.red),
-            ),
-            const SizedBox(height: 20.0),
-            Row(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(
+                  'assets/images/fancard_logo.jpeg',
+                  width: 300.0,
+                  height: 300.0,
+                  fit: BoxFit.cover,
+                ),
+                const SizedBox(height: 20.0),
+                TextField(
+                  controller: usernameController,
+                  decoration:
+                      const InputDecoration(labelText: 'Username/Email'),
+                ),
+                const SizedBox(height: 10.0),
+                TextField(
+                  controller: passwordController,
+                  obscureText: obscureText,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        setState(() {
+                          // Toggle the obscureText value to show/hide the password
+                          obscureText = !obscureText;
+                        });
+                      },
+                      icon: Icon(
+                        // Show different icons based on the obscureText value
+                        obscureText ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+                ElevatedButton(
+                  onPressed: _login,
+                  child: const Text('Submit'),
+                ),
+                const SizedBox(height: 10.0),
+                Text(
+                  errorText,
+                  style: const TextStyle(color: Colors.red),
+                ),
+                const SizedBox(height: 20.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: _openForgotPassword,
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 GestureDetector(
-                  onTap: _openForgotPassword,
+                  onTap: _openFAQ,
                   child: const Text(
-                    'Forgot Password?',
+                    'Need Help?',
                     style: TextStyle(
                       color: Colors.blue,
                       decoration: TextDecoration.underline,
@@ -155,19 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
             ),
-            GestureDetector(
-              onTap: _openFAQ,
-              child: const Text(
-                'Need Help?',
-                style: TextStyle(
-                  color: Colors.blue,
-                  decoration: TextDecoration.underline,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+          )),
     );
   }
 

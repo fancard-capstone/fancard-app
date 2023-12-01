@@ -3,13 +3,15 @@ import 'dart:convert';
 
 import 'package:fancardplus/components/topbar.dart';
 import 'package:fancardplus/constants.dart';
-import 'package:fancardplus/main.dart';
+import 'package:fancardplus/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 class NFCPage extends StatefulWidget {
-  const NFCPage({super.key});
+  const NFCPage({Key? key, required this.studentId}) : super(key: key);
+
+  final String studentId;
 
   @override
   State<NFCPage> createState() => _NFCPageState();
@@ -35,26 +37,26 @@ class _NFCPageState extends State<NFCPage> {
   @override
   void initState() {
     print("intializing nfc");
-    _addTransaction();
     _setUserId();
     super.initState();
   }
 
   Future<void> _setUserId() async {
-    String batteryLevel;
     try {
       _loading = true;
-      final result = await platform.invokeMethod<String>('startNFCHCE', "77");
+      final result =
+          await platform.invokeMethod<String>('startNFCHCE', widget.studentId);
 
       print(result);
 
-      batteryLevel = "Transaction Successfull";
+      _addTransaction();
     } on PlatformException catch (e) {
-      batteryLevel = "Failed transaction: '${e.message}'.";
+      String batteryLevel = "Failed transaction: '${e.message}'.";
+      setState(() {
+        _batteryLevel = batteryLevel;
+      });
     }
-    setState(() {
-      _batteryLevel = batteryLevel;
-    });
+
     _loading = false;
   }
 
@@ -81,7 +83,7 @@ class _NFCPageState extends State<NFCPage> {
           'Content-Type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(<String, Map<String, int>>{
-          "user": {"userId": 1},
+          "user": {"userId": int.parse(widget.studentId.toString())},
           "facility": {"facilityId": 2}
         }),
       )
@@ -146,6 +148,17 @@ class _NFCPageState extends State<NFCPage> {
             ],
           ),
           Text(_batteryLevel),
+          ElevatedButton(
+              onPressed: () {
+                final String studentId = widget.studentId;
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Transactions(studentId: studentId),
+                  ),
+                );
+              },
+              child: Text("view transactions")),
         ],
       ),
     );

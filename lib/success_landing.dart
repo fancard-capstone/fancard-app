@@ -25,7 +25,7 @@ class SuccessLanding extends StatelessWidget {
           appBar: appBar('Fancard+'),
           body: TabBarView(
             children: [
-              const AccountPage(responseBody: null),
+              AccountPage(responseBody: responseBody),
               MyHomePage(responseBody: responseBody),
               ProfilePage(responseBody: responseBody),
             ],

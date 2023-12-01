@@ -31,8 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     image: NetworkImage(
-                      widget.responseBody[
-                              'https://randomuser.me/api/portraits/men/73.jpg'] ??
+                      widget.responseBody['imageUrl'] ??
                           'https://randomuser.me/api/portraits/men/73.jpg',
                     ),
                     fit: BoxFit.cover,
@@ -55,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 8.0),
               // Email address
               Text(
-               "${widget.responseBody['firstName']} ${widget.responseBody['lastName']}", // Replace with the actual email address
+                "${widget.responseBody['firstName']} ${widget.responseBody['lastName']}", // Replace with the actual email address
                 style: const TextStyle(
                     fontSize: 16.0, fontWeight: FontWeight.bold),
               ),

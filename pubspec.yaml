@@ -43,6 +43,7 @@ dependencies:
   nfc_manager: ^3.3.0
   http: ^1.1.0
   intl: ^0.18.1
+  barcode_widget: ^2.0.4
   
 
 dev_dependencies:

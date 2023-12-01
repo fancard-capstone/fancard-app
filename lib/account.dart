@@ -2,21 +2,11 @@ import 'package:fancardplus/add_money_page.dart';
 import 'package:fancardplus/transaction_history.dart';
 import 'package:flutter/material.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: AccountPage(
-        responseBody: null,
-      ),
-    );
-  }
-}
-
 class AccountPage extends StatefulWidget {
-  const AccountPage({Key? key, required responseBody}) : super(key: key);
+  final Map<String, dynamic>
+      responseBody; // Add this line to declare responseBody
+
+  const AccountPage({Key? key, required this.responseBody}) : super(key: key);
 
   @override
   State<AccountPage> createState() => _AccountPageState();
@@ -69,15 +59,22 @@ class _AccountPageState extends State<AccountPage> {
             right: 0,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 0),
-              child: const Row(
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(
-                        'assets/images/user_image.jpg'), // Replace with your image
-                    radius: 35, // Width of the CircleAvatar
-                    backgroundColor: Colors
-                        .blue, // Replace with your desired background color or remove it
+                  Container(
+                    width: 75.0,
+                    height: 75.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          widget.responseBody['imageUrl'] ??
+                              'https://randomuser.me/api/portraits/men/73.jpg',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ],
               ),
